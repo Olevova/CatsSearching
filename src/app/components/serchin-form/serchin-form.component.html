@@ -1,0 +1,30 @@
+<p>serchin-form works!</p>
+<h1>Searching form</h1>
+<form [formGroup]="searchingForm" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <mat-label>Breed</mat-label>
+    <mat-select formControlName="Breed">
+      <mat-option *ngFor="let breed of breedsForRender" [value]="breed.name">
+        {{ breed.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-checkbox formControlName="OnlyPhoto">Only Photo</mat-checkbox>
+
+  <mat-checkbox formControlName="OnlyInformation"
+    >Only Information</mat-checkbox
+  >
+
+  <mat-form-field>
+    <mat-label>Limits of photo</mat-label>
+    <input
+      matInput
+      formControlName="limitsPhoto"
+      placeholder="Limits"
+      type="text"
+    />
+  </mat-form-field>
+
+  <button mat-stroked-button color="primary">Submit</button>
+</form>
