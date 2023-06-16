@@ -22,8 +22,8 @@ export class GetcatsService {
     return this.http.get(`https://api.thecatapi.com/v1/images/search?limit=${number}&breed_ids=beng&api_key=${this.apiKey}`)
   };
 
-  getCatsByBreed(breed:string): Observable<any>{
-    return this.http.get(` https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=${breed}&api_key=${this.apiKey}`)
+  getCatsByBreed(breed:string, limit: number = 10): Observable<any>{
+    return this.http.get(` https://api.thecatapi.com/v1/images/search?limit=${limit}&breed_ids=${breed}&api_key=${this.apiKey}`)
   };
   
 }

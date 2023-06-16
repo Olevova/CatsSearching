@@ -13,6 +13,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 })
 export class SerchinFormComponent implements OnInit{
   searchingForm: any = FormGroup;
+  catsdata: any;
+
   breedsForRender: any;
   constructor(private fb: FormBuilder,
     private breeds: GetcatsService
@@ -36,10 +38,19 @@ ngOnInit(): void {
     })
   }
 
-  onSubmit(): void{
-    console.log(this.searchingForm);
-    
+ onSubmit(): void {
+  const { Breed, OnlyPhoto, OnlyInformation, limitsPhoto } = this.searchingForm.value;
+  console.log(Breed, OnlyPhoto, OnlyInformation, limitsPhoto);
+  if (Breed || limitsPhoto) {
+    this.breeds.getCatsByBreed(Breed, limitsPhoto).subscribe((data) => {
+      this.catsdata = data;
+      console.log(this.catsdata);
+    });
+  } else {
+    console.log('all');
   }
+}
+
 
 
 }
