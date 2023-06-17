@@ -8,8 +8,8 @@ import { environment } from '../environments/environment';
 
 })
 export class GetcatsService {
-  apiKey: string = environment.apiKey;
-
+  // apiKey: string = environment.apiKey;
+  apiKey: string  = 'live_dGRUrY1XPdwGTJS5lbgR8KnMloZ0MDk7MgeV2B7Fml7LNJafh6tqljEpeSLbMmwg'
   constructor(private http: HttpClient) { }
 
   getAllcats(): Observable<any>{
