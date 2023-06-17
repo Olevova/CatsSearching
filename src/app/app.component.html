@@ -1,1 +1,2 @@
-<app-serchin-form></app-serchin-form>
+<app-serchin-form (catsdata)="onCatsDataReceived($event)"></app-serchin-form>
+<app-catlist [catsData]="catsData"></app-catlist>

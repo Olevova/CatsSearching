@@ -1,0 +1,58 @@
+<div class="catcard-container">
+  <div
+    *ngFor="
+      let cat of catsData
+        | paginate : { itemsPerPage: itemsPerPage, currentPage: p }
+    "
+  >
+    <div *ngIf="cat.hasOwnProperty('name'); else photoTemplate">
+      <div class="catcard-position">
+        <mat-card class="cat-card">
+          <mat-card-header>
+            <mat-card-title>{{ cat.name }}</mat-card-title>
+            <mat-card-subtitle>Cat Breed</mat-card-subtitle>
+          </mat-card-header>
+          <img
+            mat-card-image
+            src="https://cdn2.thecatapi.com/images/{{
+              cat.reference_image_id
+            }}.jpg"
+            alt="{{ cat.name }}"
+            width="474"
+            height="400"
+            (error)="handleImageError($event)"
+          />
+          <mat-card-content class="info">
+            <p>
+              {{ cat.description }}
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <a mat-button href="{{ cat.wikipedia_url }}" target="_blank"
+              >wikipedia link</a
+            >
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+    <ng-template #photoTemplate>
+      <mat-card class="cat-card">
+        <img
+          mat-card-image
+          src="{{ cat.url }}"
+          alt="{{ cat.id }}"
+          width="474"
+          height="400"
+          (error)="handleImageError($event)"
+        />
+      </mat-card>
+    </ng-template>
+  </div>
+</div>
+<div class="pagination">
+  <pagination-controls
+    class="my-pagination"
+    *ngIf="catsData && catsData.length > 9"
+    (pageChange)="p = $event"
+  ></pagination-controls>
+</div>

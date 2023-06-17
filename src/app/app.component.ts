@@ -8,6 +8,8 @@ import { GetcatsService } from 'src/service/getcats.service';
 })
 export class AppComponent implements OnInit{
   title = 'catssearching';
+  catsData: any;
+  loader: boolean = false;
 
   constructor(private catapi: GetcatsService) {
     
@@ -18,9 +20,10 @@ export class AppComponent implements OnInit{
       
     })
 
-     this.catapi.getLimitsPhoto(5).subscribe(cat => {
-      console.log(cat);
-      
-    })
+  }
+  onCatsDataReceived(data: any): void {
+    this.loader = false;
+    this.catsData = data;
+    // console.log(data, 'app');
   }
 }

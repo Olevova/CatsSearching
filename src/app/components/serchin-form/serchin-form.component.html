@@ -1,30 +1,38 @@
-<p>serchin-form works!</p>
-<h1>Searching form</h1>
-<form [formGroup]="searchingForm" (ngSubmit)="onSubmit()">
-  <mat-form-field>
-    <mat-label>Breed</mat-label>
-    <mat-select formControlName="Breed">
-      <mat-option *ngFor="let breed of breedsForRender" [value]="breed.id">
-        {{ breed.name }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+<section class="section_find">
+  <div class="container">
+    <h1 class="title">Searching form</h1>
+    <form [formGroup]="searchingForm" (ngSubmit)="onSubmit()" class="form">
+      <div class="form_input">
+        <mat-form-field class="form-row">
+          <mat-label>Breed</mat-label>
+          <mat-select
+            formControlName="Breed"
+            (selectionChange)="toggleLimitsInput()"
+          >
+            <mat-option value="All Breeds">All Breeds</mat-option>
+            <mat-option
+              *ngFor="let breed of breedsForRender"
+              [value]="breed.id"
+            >
+              {{ breed.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-  <mat-checkbox formControlName="OnlyPhoto">Only Photo</mat-checkbox>
-
-  <mat-checkbox formControlName="OnlyInformation"
-    >Only Information</mat-checkbox
-  >
-
-  <mat-form-field>
-    <mat-label>Limits of photo</mat-label>
-    <input
-      matInput
-      formControlName="limitsPhoto"
-      placeholder="Limits"
-      type="text"
-    />
-  </mat-form-field>
-
-  <button mat-stroked-button color="primary">Submit</button>
-</form>
+        <mat-form-field class="form-row">
+          <mat-label>Limits of cards</mat-label>
+          <input
+            matInput
+            formControlName="limitsPhoto"
+            placeholder="Limits"
+            type="text"
+            [disabled]="isLimitsInputDisabled"
+          />
+        </mat-form-field>
+      </div>
+      <div class="button-container">
+        <button mat-fab extended color="primary">Searching</button>
+      </div>
+    </form>
+  </div>
+</section>

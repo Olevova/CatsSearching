@@ -10,11 +10,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatButtonModule} from '@angular/material/button'
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { CatlistComponent } from './components/catlist/catlist.component'
+import {NgxPaginationModule} from 'ngx-pagination'; 
+import { SlickCarouselModule } from 'ngx-slick-carousel';
+
+
 @NgModule({
   declarations: [
     AppComponent,
-    SerchinFormComponent
+    SerchinFormComponent,
+    CatlistComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +33,11 @@ import {MatButtonModule} from '@angular/material/button'
     MatSelectModule,
     MatCheckboxModule,
     MatFormFieldModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCardModule,
+    NgxPaginationModule,
+    SlickCarouselModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

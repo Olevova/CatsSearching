@@ -1,10 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { GetcatsService } from 'src/service/getcats.service';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-
 
 @Component({
   selector: 'app-serchin-form',
@@ -13,44 +9,75 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 })
 export class SerchinFormComponent implements OnInit{
   searchingForm: any = FormGroup;
-  catsdata: any;
+  @Output() catsdata = new EventEmitter<any>();
+  isLimitsInputDisabled: boolean = false;
 
   breedsForRender: any;
   constructor(private fb: FormBuilder,
-    private breeds: GetcatsService
+  private breeds: GetcatsService
   ) {
     
   }
 ngOnInit(): void {
   this.initzializationForm();
-  this.breeds.getbreeds().subscribe(breeds => this.breedsForRender=breeds)
+  this.breeds.getAllcats().subscribe(breeds => this.breedsForRender=breeds)
   console.log(this.breedsForRender);
-  
 }
   
-  initzializationForm(): void{
+initzializationForm(): void{
     this.searchingForm = this.fb.group({
       Breed: " ",
-      OnlyPhoto: '',
-      OnlyInformation: '',
       limitsPhoto: '',
-
     })
   }
 
- onSubmit(): void {
-  const { Breed, OnlyPhoto, OnlyInformation, limitsPhoto } = this.searchingForm.value;
-  console.log(Breed, OnlyPhoto, OnlyInformation, limitsPhoto);
-  if (Breed || limitsPhoto) {
-    this.breeds.getCatsByBreed(Breed, limitsPhoto).subscribe((data) => {
-      this.catsdata = data;
-      console.log(this.catsdata);
-    });
-  } else {
-    console.log('all');
+toggleLimitsInput(): void {
+    const breedControl = this.searchingForm.get('Breed');
+    const limitsPhotoControl = this.searchingForm.get('limitsPhoto');  
+  if (breedControl.value === 'All Breeds') {
+      this.searchingForm.get('limitsPhoto').disable();
+      this.isLimitsInputDisabled = true;
+      limitsPhotoControl.setValue('');
+    } else {
+      this.searchingForm.get('limitsPhoto').enable();
+      this.isLimitsInputDisabled = false;
+    }
   }
+
+  onSubmit(): void {
+    if (this.searchingForm.pristine || this.searchingForm.value.Breed === 'All Breeds') {
+      this.breeds.getAllcats().subscribe((data) => {
+          this.catsdata.emit(data);
+          console.log(this.catsdata, 'all2');
+        });
+    }
+    else {
+      const { Breed, limitsPhoto } = this.searchingForm.value;
+      console.log(Breed, limitsPhoto);
+
+      if (Breed || limitsPhoto) {
+
+        if (limitsPhoto) {
+          this.breeds.getLimitsCards(limitsPhoto).subscribe((data) => {
+            this.catsdata.emit(data);
+            // console.log(this.catsdata, 'limitsPhoto');
+          });
+        }
+        else {
+          this.breeds.getCatsByBreed(Breed, 10).subscribe((data) => {
+            this.catsdata.emit(data);
+            // console.log(this.catsdata);
+          });
+        }
+      }
+      else if (Breed && !limitsPhoto) {
+        this.breeds.getCatsByBreed(Breed, 10).subscribe((data) => {
+          this.catsdata.emit(data);
+          // console.log(this.catsdata);
+        });
+      }
+    }
 }
-
-
+  
 
 }

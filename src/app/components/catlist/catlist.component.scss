@@ -1,0 +1,63 @@
+.catcard-container {
+    max-width: 1440px;
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.catcard-position {
+    display: flex;
+    justify-content: center;
+}
+
+.cat-card img{
+    object-fit: cover;
+}
+
+.cat-card .info{
+min-height: 150px;
+& p{
+    padding-top: 10px;
+}
+}
+.pagination{
+    padding: 30px;
+    display: flex;
+    justify-content: center;          
+        
+}
+
+
+.my-pagination ::ng-deep .ngx-pagination{ 
+    & a{
+        border-radius: 50%;
+    }
+    & .current {
+    background-color: #3f51b5;
+    color: #fff;
+    border-radius: 50%;
+   }}
+
+.my-pagination ::ng-deep .ngx-pagination a:hover{
+    border-radius: 0%;
+    background-color:#fff
+}
+
+.swiper-container {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    text-align: center;
+}
+
+.swiper-pagination {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+}
